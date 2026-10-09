@@ -2,50 +2,127 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>ググレカス風サイト</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google</title>
     <style>
-        body { text-align: center; font-family: sans-serif; padding-top: 100px; }
-        .search-box { font-size: 24px; padding: 10px; width: 400px; text-align: center; }
-        .message { font-size: 18px; color: red; margin-top: 20px; font-weight: bold; }
+        /* 全体のレイアウト（画面中央に配置） */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #ffffff;
+        }
+
+        /* Google風のテキストロゴ */
+        .logo {
+            font-size: 90px;
+            font-weight: 500;
+            letter-spacing: -2px;
+            margin-bottom: 30px;
+            user-select: none;
+        }
+        .g1 { color: #4285F4; } /* 青 */
+        .o1 { color: #EA4335; } /* 赤 */
+        .o2 { color: #FBBC05; } /* 黄 */
+        .g2 { color: #4285F4; } /* 青 */
+        .l  { color: #34A853; } /* 緑 */
+        .e  { color: #EA4335; } /* 赤 */
+
+        /* 丸みのあるGoogle風の検索窓 */
+        .search-container {
+            width: 100%;
+            max-width: 580px;
+            margin-bottom: 30px;
+        }
+        .search-box {
+            width: 100%;
+            box-sizing: border-box;
+            height: 46px;
+            padding: 0 20px;
+            font-size: 16px;
+            border: 1px solid #dfe1e5;
+            border-radius: 24px;
+            outline: none;
+            box-shadow: none;
+            transition: box-shadow 0.2s;
+        }
+        .search-box:hover {
+            box-shadow: 0 1px 6px rgba(32,33,36,.28);
+            border-color: rgba(223,225,229,0);
+        }
+
+        /* 検索ボタン */
+        .buttons-container {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+        .btn {
+            background-color: #f8f9fa;
+            border: 1px solid #f8f9fa;
+            border-radius: 4px;
+            color: #3c4043;
+            font-size: 14px;
+            margin: 11px 4px;
+            padding: 0 16px;
+            line-height: 27px;
+            height: 36px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            border: 1px solid #dadce0;
+            color: #202124;
+        }
     </style>
 </head>
 <body>
 
-    <h1>自分で調べよう！</h1>
-    <!-- 検索文字が自動入力されるダミーの検索窓 -->
-    <input type="text" id="search" class="search-box" readonly>
-    <div id="message" class="message"></div>
+    <!-- Googleロゴ -->
+    <div class="logo">
+        <span class="g1">G</span><span class="o1">o</span><span class="o2">o</span><span class="g2">g</span><span class="l">l</span><span class="e">e</span>
+    </div>
+
+    <!-- 検索窓 -->
+    <div class="search-container">
+        <input type="text" id="search" class="search-box" readonly>
+    </div>
+
+    <!-- ボタン -->
+    <div class="buttons-container">
+        <button class="btn">Google 検索</button>
+        <button class="btn">I'm Feeling Lucky</button>
+    </div>
 
     <script>
-        // 1. URLのパラメータ（?q=xxx）から検索ワードを取得
+        // URLの ?q= からキーワードを取得
         const urlParams = new URLSearchParams(window.location.search);
-        const query = urlParams.get('q') || '自分で調べる方法'; // パラメータがない時のデフォルト
+        const query = urlParams.get('q') || '三角関数とプログラミングの関係';
 
         const searchInput = document.getElementById('search');
-        const messageDiv = document.getElementById('message');
-        
         let index = 0;
 
-        // 2. 1文字ずつタイピングするアニメーション
+        // タイピングアニメーション
         function typeKeyword() {
             if (index < query.length) {
                 searchInput.value += query.charAt(index);
                 index++;
-                setTimeout(typeKeyword, 200); // 0.2秒ごとに次の文字を入力
+                setTimeout(typeKeyword, 150); // 文字が入力される速度
             } else {
-                // 入力が終わったらメッセージを表示
-                messageDiv.innerText = "これくらい自分で調べろカス！今からGoogleを開きます...";
-                
-                // 3. 2秒後にGoogleの検索結果へリダイレクト
+                // 入力が終わったら、0.5秒後にそのまま本物のGoogleへジャンプ
                 setTimeout(() => {
-                    window.location.href = "https://google.com" + encodeURIComponent(query);
-                }, 2000);
+                    window.location.href = "https://www.google.com/search?q=" + encodeURIComponent(query);
+                }, 500);
             }
         }
 
-        // ページが読み込まれたらタイピングを開始
+        // ページが開いてから0.6秒後に自動入力を開始
         window.onload = () => {
-            setTimeout(typeKeyword, 1000); // 1秒後にスタート
+            setTimeout(typeKeyword, 600);
         };
     </script>
 </body>
