@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Google</title>
     <style>
-        /* 全体のレイアウト（画面中央に配置） */
         body {
             margin: 0;
             padding: 0;
@@ -17,8 +16,6 @@
             height: 100vh;
             background-color: #ffffff;
         }
-
-        /* Google風のテキストロゴ */
         .logo {
             font-size: 90px;
             font-weight: 500;
@@ -26,14 +23,12 @@
             margin-bottom: 30px;
             user-select: none;
         }
-        .g1 { color: #4285F4; } /* 青 */
-        .o1 { color: #EA4335; } /* 赤 */
-        .o2 { color: #FBBC05; } /* 黄 */
-        .g2 { color: #4285F4; } /* 青 */
-        .l  { color: #34A853; } /* 緑 */
-        .e  { color: #EA4335; } /* 赤 */
-
-        /* 丸みのあるGoogle風の検索窓 */
+        .g1 { color: #4285F4; }
+        .o1 { color: #EA4335; }
+        .o2 { color: #FBBC05; }
+        .g2 { color: #4285F4; }
+        .l  { color: #34A853; }
+        .e  { color: #EA4335; }
         .search-container {
             width: 100%;
             max-width: 580px;
@@ -55,8 +50,6 @@
             box-shadow: 0 1px 6px rgba(32,33,36,.28);
             border-color: rgba(223,225,229,0);
         }
-
-        /* 検索ボタン */
         .buttons-container {
             display: flex;
             gap: 12px;
@@ -82,45 +75,38 @@
 </head>
 <body>
 
-    <!-- Googleロゴ -->
     <div class="logo">
         <span class="g1">G</span><span class="o1">o</span><span class="o2">o</span><span class="g2">g</span><span class="l">l</span><span class="e">e</span>
     </div>
 
-    <!-- 検索窓 -->
     <div class="search-container">
         <input type="text" id="search" class="search-box" readonly>
     </div>
 
-    <!-- ボタン -->
     <div class="buttons-container">
         <button class="btn">Google 検索</button>
         <button class="btn">I'm Feeling Lucky</button>
     </div>
 
     <script>
-        // URLの ?q= からキーワードを取得
         const urlParams = new URLSearchParams(window.location.search);
-        const query = urlParams.get('q') || '三角関数とプログラミングの関係';
+        const query = urlParams.get('q') || 'ggrksとは';
 
         const searchInput = document.getElementById('search');
         let index = 0;
 
-        // タイピングアニメーション
         function typeKeyword() {
             if (index < query.length) {
                 searchInput.value += query.charAt(index);
                 index++;
-                setTimeout(typeKeyword, 150); // 文字が入力される速度
+                setTimeout(typeKeyword, 150);
             } else {
-                // 入力が終わったら、0.5秒後にそのまま本物のGoogleへジャンプ
                 setTimeout(() => {
                     window.location.href = "https://www.google.com/search?q=" + encodeURIComponent(query);
                 }, 500);
             }
         }
 
-        // ページが開いてから0.6秒後に自動入力を開始
         window.onload = () => {
             setTimeout(typeKeyword, 600);
         };
