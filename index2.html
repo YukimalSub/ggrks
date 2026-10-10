@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #ffffff;
+            overflow: hidden;
+        }
+        .logo {
+            font-size: 90px;
+            font-weight: 500;
+            letter-spacing: -2px;
+            margin-bottom: 30px;
+            user-select: none;
+        }
+        .g1 { color: #4285F4; }
+        .o1 { color: #EA4335; }
+        .o2 { color: #FBBC05; }
+        .g2 { color: #4285F4; }
+        .l  { color: #34A853; }
+        .e  { color: #EA4335; }
+        .search-container {
+            width: 100%;
+            max-width: 580px;
+            margin-bottom: 30px;
+        }
+        .search-box {
+            width: 100%;
+            box-sizing: border-box;
+            height: 46px;
+            padding: 0 20px;
+            font-size: 16px;
+            border: 1px solid #dfe1e5;
+            border-radius: 24px;
+            outline: none;
+            box-shadow: none;
+            transition: box-shadow 0.2s;
+        }
+        .search-box.hover {
+            box-shadow: 0 1px 6px rgba(32,33,36,.28);
+            border-color: rgba(223,225,229,0);
+        }
+        .buttons-container {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+        .btn {
+            background-color: #f8f9fa;
+            border: 1px solid #f8f9fa;
+            border-radius: 4px;
+            color: #3c4043;
+            font-size: 14px;
+            margin: 11px 4px;
+            padding: 0 16px;
+            line-height: 27px;
+            height: 36px;
+            cursor: pointer;
+        }
+        #cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            top: 100vh;
+            left: 0;
+            z-index: 9999;
+            pointer-events: none;
+            transition: top 1s ease-in-out, left 1s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+    <svg id="cursor" viewBox="0 0 24 24">
+        <path fill="#000000" stroke="#ffffff" stroke-width="1.5" d="M4.5,3v15.2l4.3-4.3l3,7.1l3.3-1.4l-3.1-7.1l5.5,0.1L4.5,3z"/>
+    </svg>
+
+    <div class="logo">
+        <span class="g1">G</span><span class="o1">o</span><span class="o2">o</span><span class="g2">g</span><span class="l">l</span><span class="e">e</span>
+    </div>
+
+    <div class="search-container">
+        <input type="text" id="search" class="search-box" readonly>
+    </div>
+
+    <div class="buttons-container">
+        <button class="btn">Google 検索</button>
+        <button class="btn">I'm Feeling Lucky</button>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const query = urlParams.get('q') || 'ポテトチップス';
+
+        const searchInput = document.getElementById('search');
+        const cursor = document.getElementById('cursor');
+        let index = 0;
+
+        function typeKeyword() {
+            if (index < query.length) {
+                searchInput.value += query.charAt(index);
+                index++;
+                setTimeout(typeKeyword, 150);
+            } else {
+                setTimeout(() => {
+                    window.location.href = "https://google.com" + encodeURIComponent(query);
+                }, 500);
+            }
+        }
+
+        window.onload = () => {
+            setTimeout(() => {
+                const rect = searchInput.getBoundingClientRect();
+                const targetX = rect.left + 50;
+                const targetY = rect.top + (rect.height / 2);
+
+                cursor.style.left = targetX + 'px';
+                cursor.style.top = targetY + 'px';
+
+                setTimeout(() => {
+                    searchInput.classList.add('hover');
+                    setTimeout(() => {
+                        typeKeyword();
+                    }, 300);
+                }, 1000);
+            }, 500);
+        };
+    </script>
+</body>
+</html>
